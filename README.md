@@ -1,4 +1,4 @@
-# TODO: Prayer Box
+# PRAYER BOX
 ## prayer_box_flutter
 
 This application is a responsive prayer box and bible scripture provider for Christians from all walks of life.
