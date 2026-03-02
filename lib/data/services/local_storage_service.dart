@@ -12,8 +12,6 @@ class _Keys {
 
 class LocalStorageService extends GetxService {
   Future<LocalStorageService> init() async {
-    // Initialize your local storage here
-    // Example: await _initializeHiveBoxes();
     return this;
   }
 
@@ -31,8 +29,7 @@ class LocalStorageService extends GetxService {
     }
   }
 
-  // Retrieves the JSON string from SharedPreferences, decodes it, 
-  // and converts it back to a list of PrayerRequest objects
+  // Retrieves the JSON string from SharedPreferences
   Future<List<PrayerRequest>> loadPrayerRequests() async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();

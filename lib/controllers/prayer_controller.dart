@@ -1,4 +1,4 @@
-import 'dart:ui';
+// lib/controllers/prayer_controller.dart
 
 import 'package:get/get.dart';
 import 'package:prayer_box_flutter/data/models/prayer_models.dart';
@@ -10,6 +10,8 @@ class PrayerController extends GetxController {
 
   // Reactive list of answered prayers
   final RxList<PrayerRequest> answeredPrayers = <PrayerRequest>[].obs;
+  
+  // Note: userProfile has been removed since auth is just for show
 
   final LocalStorageService _storageService = LocalStorageService();
 
@@ -27,9 +29,6 @@ class PrayerController extends GetxController {
     final List<PrayerRequest> allPrayers = await _storageService.loadPrayerRequests();
     final List<PrayerRequest> unanswered = [];
     final List<PrayerRequest> answered = [];
-
-    unanswered.assignAll(allPrayers.where((prayer) => !prayer.isAnswered).toList());
-    answered.assignAll(allPrayers.where((prayer) => prayer.isAnswered).toList());
 
     for (var prayer in allPrayers) {
       if (prayer.isAnswered) {
@@ -56,7 +55,7 @@ class PrayerController extends GetxController {
     required String content,
     required String? meditationScripture,
   }) async {
-    final PrayerRequest newPrayer= PrayerRequest(
+    final PrayerRequest newPrayer = PrayerRequest(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       title: title,
       content: content,
@@ -110,5 +109,18 @@ class PrayerController extends GetxController {
 
     unansweredPrayers[index] = updatedPrayer;
     await saveToLocalStorage();
+  }
+
+  // Method to find a prayer request by ID
+  PrayerRequest? findPrayerById(String id) {
+    try {
+      return unansweredPrayers.firstWhere((p) => p.id == id);
+    } catch (e) {
+      try {
+        return answeredPrayers.firstWhere((p) => p.id == id);
+      } catch (e) {
+        return null;
+      }
+    }
   }
 }

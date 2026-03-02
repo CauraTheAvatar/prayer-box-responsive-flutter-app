@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:prayer_box_flutter/routes/app_pages.dart';
 import 'package:prayer_box_flutter/routes/app_routes.dart';
 import 'package:prayer_box_flutter/controllers/settings_controller.dart';
 import 'package:prayer_box_flutter/controllers/scripture_controller.dart';
 import 'package:prayer_box_flutter/data/services/scripture_service.dart';
 import 'package:prayer_box_flutter/data/services/local_storage_service.dart';
 import 'package:prayer_box_flutter/controllers/prayer_controller.dart';
+import 'package:prayer_box_flutter/core/theme/app_theme.dart'; // Import your app theme
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   // Initialize and register services and controllers
+  final localStorageService = await LocalStorageService().init();
+  Get.put(localStorageService);
+  
   final scriptureService = await ScriptureService().init();
   Get.put(scriptureService);
+  
   Get.put(PrayerController());
   Get.put(ScriptureController());
   Get.put(SettingsController());
   
   runApp(
     const PrayerBoxApp()
-    );
+  );
 }
 
 class PrayerBoxApp extends StatelessWidget {
@@ -31,7 +37,8 @@ class PrayerBoxApp extends StatelessWidget {
       title: 'Prayer Box',
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.landing,
-      getPages: AppRoutes.routes,
+      getPages: AppPages.pages,
+      theme: AppTheme.lightTheme, 
     );
   }
 }
