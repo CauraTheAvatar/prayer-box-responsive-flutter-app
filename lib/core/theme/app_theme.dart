@@ -193,8 +193,7 @@ class AppTheme {
   );
 
  
-  // Reusable decorations — imported by screens instead of redefining inline
-  // Beige background, gold border, subtle gold shadow
+  // Reusable decorations 
   static BoxDecoration get widgetDecoration => BoxDecoration(
         color: AppColors.beige,
         borderRadius: BorderRadius.circular(12),
@@ -215,7 +214,7 @@ class AppTheme {
         border: Border.all(color: AppColors.gold, width: 1),
       );
 
-  // Gold background, dark brown border — for primary action buttons
+  // For primary action buttons
   static BoxDecoration get primaryButtonDecoration => BoxDecoration(
         color: AppColors.gold,
         borderRadius: BorderRadius.circular(8),

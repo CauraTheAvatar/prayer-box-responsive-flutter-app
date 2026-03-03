@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prayer_box_flutter/controllers/prayer_controller.dart';
+
 import 'package:prayer_box_flutter/core/theme/app_colors.dart'; 
 import 'package:prayer_box_flutter/core/responsive/app_responsive.dart';
 import 'package:prayer_box_flutter/core/constants/app_strings.dart';
+
 import 'package:prayer_box_flutter/views/widgets/common/app_drawer.dart';
 import 'package:prayer_box_flutter/views/widgets/common/footer_widget.dart';
 import 'package:prayer_box_flutter/views/widgets/prayer/prayer_preview_tile.dart';

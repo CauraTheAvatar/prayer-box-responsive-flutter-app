@@ -9,6 +9,7 @@ abstract class AppStrings {
   static const String appBarWelcome = 'Welcome,';
   static const String appBarPrayerList = 'Prayer Requests';
   static const String appBarPrayerForm = 'Add New Prayer Request';
+  static const String appBarPrayerFormEdit = 'Edit Prayer Request';
   static const String appBarPrayerDetail = 'Prayer Details';
   static const String appBarAnswered = 'Answered Prayers';
   static const String appBarSettings = 'Settings';

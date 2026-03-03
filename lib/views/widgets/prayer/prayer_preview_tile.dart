@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prayer_box_flutter/routes/app_routes.dart';
 import 'package:prayer_box_flutter/controllers/prayer_controller.dart';
+import 'package:prayer_box_flutter/views/widgets/prayer/recent_prayer_checklist.dart';
+
 import 'package:prayer_box_flutter/core/theme/app_colors.dart';
 import 'package:prayer_box_flutter/core/constants/app_strings.dart';
 import 'package:prayer_box_flutter/core/theme/app_theme.dart';
-import 'package:prayer_box_flutter/views/widgets/prayer/recent_prayer_checklist.dart';
 
 class PrayerPreviewTile extends StatelessWidget {
   const PrayerPreviewTile({super.key});

@@ -67,7 +67,7 @@ class PrayerRequest {
   }
 }
 
-// This represents a daily Bible scripture fetched from the YouVersion API
+// Represents a daily Bible scripture 
 class DailyScripture {
   DailyScripture({
     required this.id,
@@ -104,7 +104,7 @@ class DailyScripture {
       };
 }
 
-// Represents the authenticated user's profile information
+// Represents the user's profile information
 class AppUser {
   const AppUser({
     required this.uid,
@@ -113,10 +113,10 @@ class AppUser {
     this.notificationsEnabled = true,
   });
 
-  final String uid;  // Unique identifier for the user
-  final String username;  // User's display username
-  final String email;  // User's email address
-  final bool notificationsEnabled;  // Whether the user has enabled prayer notifications
+  final String uid;  
+  final String username;  
+  final String email;  
+  final bool notificationsEnabled;  
 
   AppUser copyWith({
     String? uid,

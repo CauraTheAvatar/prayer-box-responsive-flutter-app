@@ -22,32 +22,32 @@ abstract class AppPages {
     ),
     GetPage(
       name: AppRoutes.prayerList,
-      page: () => const PrayerListScreen(),
+      page: () => PrayerListScreen(),
       transition: Transition.rightToLeft,
     ),
     GetPage(
       name: AppRoutes.prayerForm,
-      page: () => const PrayerFormScreen(),
+      page: () => PrayerFormScreen(),
       transition: Transition.rightToLeft,
     ),
     GetPage(
       name: AppRoutes.prayerDetail,
-      page: () => const PrayerDetailScreen(),
+      page: () => PrayerDetailScreen(),
       transition: Transition.rightToLeft,
     ),
     GetPage(
       name: AppRoutes.answeredPrayers,
-      page: () => const AnsweredPrayersScreen(),
+      page: () => AnsweredPrayersScreen(),
       transition: Transition.rightToLeft,
     ),
     GetPage(
       name: AppRoutes.settings,
-      page: () => const SettingsScreen(),
+      page: () => SettingsScreen(),
       transition: Transition.rightToLeft,
     ),
     GetPage(
       name: AppRoutes.stats,
-      page: () => const StatsScreen(),
+      page: () => StatsScreen(),
       transition: Transition.rightToLeft,
     ),
   ];

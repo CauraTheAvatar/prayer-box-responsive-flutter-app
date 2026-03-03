@@ -1,9 +1,9 @@
 import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:prayer_box_flutter/data/models/prayer_models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:get/get.dart';
 
 class _Keys {
   static const String prayers = 'prayers_requests';
@@ -57,7 +57,7 @@ class LocalStorageService extends GetxService {
   }
 
   // Notification Settings
-  // Saves the user's notification preference (enabled/disabled) in SharedPreferences
+  // Saves the user's notification preference in SharedPreferences
   Future<void> saveNotificationPreference(bool value) async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();

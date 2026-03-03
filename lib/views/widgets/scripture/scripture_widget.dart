@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prayer_box_flutter/controllers/scripture_controller.dart';
 import 'package:prayer_box_flutter/core/theme/app_colors.dart';
-import 'package:prayer_box_flutter/core/responsive/app_responsive.dart'; // Fixed path
+import 'package:prayer_box_flutter/core/responsive/app_responsive.dart';
 import 'package:prayer_box_flutter/core/constants/app_strings.dart';
 import 'package:prayer_box_flutter/core/theme/app_theme.dart';
 

@@ -1,5 +1,3 @@
-// lib/controllers/prayer_controller.dart
-
 import 'package:get/get.dart';
 import 'package:prayer_box_flutter/data/models/prayer_models.dart';
 import 'package:prayer_box_flutter/data/services/local_storage_service.dart';
