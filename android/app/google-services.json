@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1091524110711",
+    "project_id": "prayer-box-flutter",
+    "storage_bucket": "prayer-box-flutter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1091524110711:android:d803654f238c7e62705972",
+        "android_client_info": {
+          "package_name": "com.example.prayer_box_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbikPwJob3Ker8jn1oiX2bQGjzl_ITqWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
