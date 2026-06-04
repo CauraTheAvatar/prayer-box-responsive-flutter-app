@@ -71,7 +71,10 @@ The application uses named routing and reactive state management via GetX.
 
 ## Deployment
 The application is deployed at:
-[localhost](http://localhost:5000/)
+https://personalprayerbox.netlify.app/ - Web browser and mobile device compatible
+
+To download the APK onto your android device, click on the link below:
+https://astounding-alfajores-a2eed0.netlify.app/downloads/app-release.apk
 
 
 ## Notes
