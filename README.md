@@ -73,6 +73,8 @@ The application uses named routing and reactive state management via GetX.
 The application is deployed at:
 https://prayer-box-flutter.web.app
 
+Mobile application APK Downloadable:
+https://github.com/CauraTheAvatar/prayer-box-responsive-flutter-app/releases/download/v1.0.0/PrayerBox-v1.0.apk
 
 ## Notes
 - No binary files are included.
