@@ -1,1 +1,37 @@
-{"flutter":{"platforms":{"dart":{"lib/firebase_options.dart":{"projectId":"prayer-box-flutter","configurations":{"android":"1:1091524110711:android:d803654f238c7e62705972","web":"1:1091524110711:web:ab754e2e6ddd805b705972","windows":"1:1091524110711:web:fd8e903959b1addf705972"}}},"android":{"default":{"projectId":"prayer-box-flutter","appId":"1:1091524110711:android:d803654f238c7e62705972","fileOutput":"android/app/google-services.json"}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "prayer-box-flutter",
+          "configurations": {
+            "android": "1:1091524110711:android:d803654f238c7e62705972",
+            "web": "1:1091524110711:web:ab754e2e6ddd805b705972",
+            "windows": "1:1091524110711:web:fd8e903959b1addf705972"
+          }
+        }
+      },
+      "android": {
+        "default": {
+          "projectId": "prayer-box-flutter",
+          "appId": "1:1091524110711:android:d803654f238c7e62705972",
+          "fileOutput": "android/app/google-services.json"
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
