@@ -1,33 +1,22 @@
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:prayer_box_flutter/routes/app_routes.dart';
 import 'package:prayer_box_flutter/core/constants/app_strings.dart';
 
 class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // reactive current user
-  final Rx<User?> currentUser = Rx<User?>(null);
-
-  // reactive loading state
-  final RxBool isLoading = false.obs;
-
-  // reactive error message
-  final RxString errorMessage = ''.obs;
+  final Rx<User?> currentUser  = Rx<User?>(null);
+  final RxBool    isLoading    = false.obs;
+  final RxString  errorMessage = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
-    // bind stream so currentUser updates automatically
     currentUser.bindStream(_auth.authStateChanges());
-
-    // navigate based on auth state
     ever(currentUser, _handleAuthStateChange);
   }
 
-  // auth state handler
   void _handleAuthStateChange(User? user) {
     if (user != null) {
       Get.offAllNamed(AppRoutes.landing);
@@ -36,35 +25,26 @@ class AuthController extends GetxController {
     }
   }
 
-  // SIGN UP
   Future<void> signUp({
     required String username,
     required String email,
     required String password,
   }) async {
     try {
-      isLoading.value = true;
+      isLoading.value    = true;
       errorMessage.value = '';
 
-      final UserCredential credential = await _auth.createUserWithEmailAndPassword(
-        email: email.trim(),
+      final UserCredential credential =
+          await _auth.createUserWithEmailAndPassword(
+        email:    email.trim(),
         password: password.trim(),
       );
 
-      // save user profile to Firestore
-      await _firestore
-          .collection('users')
-          .doc(credential.user!.uid)
-          .set({
-        'uid': credential.user!.uid,
-        'username': username.trim(),
-        'email': email.trim(),
-        'createdAt': FieldValue.serverTimestamp(),
-        'notificationsEnabled': true,
-      });
-
-      // update display name
+      // Store username in Firebase Auth profile only — no Firestore
       await credential.user!.updateDisplayName(username.trim());
+
+      // Force refresh so displayName is available immediately
+      await credential.user!.reload();
     } on FirebaseAuthException catch (e) {
       errorMessage.value = _mapFirebaseError(e.code);
     } catch (e) {
@@ -74,17 +54,16 @@ class AuthController extends GetxController {
     }
   }
 
-  // LOGIN
   Future<void> login({
     required String email,
     required String password,
   }) async {
     try {
-      isLoading.value = true;
+      isLoading.value    = true;
       errorMessage.value = '';
 
       await _auth.signInWithEmailAndPassword(
-        email: email.trim(), 
+        email:    email.trim(),
         password: password.trim(),
       );
     } on FirebaseAuthException catch (e) {
@@ -96,7 +75,6 @@ class AuthController extends GetxController {
     }
   }
 
-  // LOGOUT
   Future<void> logout() async {
     try {
       await _auth.signOut();
@@ -105,7 +83,6 @@ class AuthController extends GetxController {
     }
   }
 
-  // Maps firebase error codes to readable messages
   String _mapFirebaseError(String code) {
     switch (code) {
       case 'email-already-in-use':
@@ -115,7 +92,7 @@ class AuthController extends GetxController {
       case 'weak-password':
         return 'Password must be at least 8 characters, including a number and a special character.';
       case 'user-not-found':
-        return 'No account found with this email';
+        return 'No account found with this email.';
       case 'wrong-password':
         return 'Incorrect password. Please try again.';
       case 'too-many-requests':

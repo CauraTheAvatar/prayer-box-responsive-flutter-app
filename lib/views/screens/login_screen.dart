@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:prayer_box_flutter/routes/app_pages.dart';
+import 'package:prayer_box_flutter/routes/app_routes.dart';
 import 'package:prayer_box_flutter/core/theme/app_theme.dart';
 import 'package:prayer_box_flutter/core/utils/validators.dart';
 import 'package:prayer_box_flutter/core/theme/app_colors.dart';
@@ -20,70 +20,52 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background, // off-white
       body: SafeArea(
-        child: ResponsiveContainer(
-          child: SingleChildScrollView(
-            padding: AppResponsive.screenPadding(context),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(
-                  height: AppResponsive.value<double>(
-                    context,
-                    mobile: 48,
-                    tablet: 64,
-                    desktop: 80,
-                  )
-                ),
-
-                // Header
-                _header(context),
-                const SizedBox(height: 40),
-
-                // Form
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // Email
-                      _emailField(context),
-                      const SizedBox(height: 16),
-
-                      // Password
-                      _passwordField(context),
-                      const SizedBox(height: 8),
-
-                      // Reactive error message
-                      Obx(() {
-                        if (_authController.errorMessage.value.isEmpty) {
-                          return const SizedBox.shrink();
-                        }
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 4, bottom: 4),
-                          child: Text(
-                            _authController.errorMessage.value,
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall
-                                ?.copyWith(color: Colors.red.shade700),
-                          ),
-                        );
-                      }),
-
-                      const SizedBox(height: 24),
-
-                      // login button
-                      _loginButton(context),
-                      const SizedBox(height: 16),
-
-                      // nav to sign up
-                      _signUpLink(context),
-                    ],
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: SingleChildScrollView(
+              padding: AppResponsive.screenPadding(context),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(height: _getResponsiveHeight(context)),
+                  _header(context),
+                  const SizedBox(height: 40),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _emailField(context),
+                        const SizedBox(height: 16),
+                        _passwordField(context),
+                        const SizedBox(height: 8),
+                        Obx(() {
+                          if (_authController.errorMessage.value.isEmpty) {
+                            return const SizedBox.shrink();
+                          }
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 4, bottom: 4),
+                            child: Text(
+                              _authController.errorMessage.value,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelSmall
+                                  ?.copyWith(color: Colors.red.shade700),
+                            ),
+                          );
+                        }),
+                        const SizedBox(height: 24),
+                        _loginButton(context),
+                        const SizedBox(height: 16),
+                        _signUpLink(context),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -91,7 +73,13 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  // HEADER
+  double _getResponsiveHeight(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    if (width >= 1200) return 80.0;
+    if (width >= 600) return 64.0;
+    return 48.0;
+  }
+
   Widget _header(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,7 +87,7 @@ class LoginScreen extends StatelessWidget {
         Text(
           AppStrings.appName.toUpperCase(),
           style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                color: AppColors.espresso,
+                color: AppColors.espresso, // brown
                 letterSpacing: 3,
               ),
         ),
@@ -116,7 +104,7 @@ class LoginScreen extends StatelessWidget {
         Text(
           AppStrings.loginTitle,
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                color: AppColors.espresso,
+                color: AppColors.espresso, // brown
               ),
         ),
         const SizedBox(height: 4),
@@ -130,10 +118,9 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  // EMAIL FIELD
   Widget _emailField(BuildContext context) {
     return Container(
-      decoration: AppTheme.widgetDecoration,
+      decoration: AppTheme.widgetDecoration, // uses off-white fill
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,7 +128,7 @@ class LoginScreen extends StatelessWidget {
           Text(
             'Email',
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: AppColors.espresso,
+                  color: AppColors.espresso, // brown
                   letterSpacing: 2,
                 ),
           ),
@@ -151,7 +138,7 @@ class LoginScreen extends StatelessWidget {
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.espresso,
+                  color: AppColors.espresso, // brown
                 ),
             decoration: const InputDecoration(
               hintText: 'Enter your email address...',
@@ -166,7 +153,6 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  // PASSWORD FIELD
   Widget _passwordField(BuildContext context) {
     return Container(
       decoration: AppTheme.widgetDecoration,
@@ -177,7 +163,7 @@ class LoginScreen extends StatelessWidget {
           Text(
             'Password',
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: AppColors.espresso,
+                  color: AppColors.espresso, // brown
                   letterSpacing: 2,
                 ),
           ),
@@ -187,7 +173,7 @@ class LoginScreen extends StatelessWidget {
                 obscureText: _obscurePassword.value,
                 textInputAction: TextInputAction.done,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: AppColors.espresso,
+                      color: AppColors.espresso, // brown
                     ),
                 decoration: InputDecoration(
                   hintText: 'Enter your password...',
@@ -212,24 +198,23 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  // LOGIN BUTTON
   Widget _loginButton(BuildContext context) {
     return Obx(() => GestureDetector(
           onTap: _authController.isLoading.value
               ? null
               : () async {
-                if (_formKey.currentState!.validate()) {
-                  await _authController.login(
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                  );
-                }
-              },
+                  if (_formKey.currentState!.validate()) {
+                    await _authController.login(
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                    );
+                  }
+                },
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 14),
             decoration: _authController.isLoading.value
                 ? AppTheme.buttonDecoration
-                : AppTheme.primaryButtonDecoration,
+                : AppTheme.primaryButtonDecoration, // blue background
             child: Center(
               child: _authController.isLoading.value
                   ? const SizedBox(
@@ -243,15 +228,14 @@ class LoginScreen extends StatelessWidget {
                   : Text(
                       AppStrings.loginButton,
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                            color: AppColors.espresso,
+                            color: AppColors.espresso, // brown text on blue button
                           ),
-                  ),
+                    ),
             ),
           ),
         ));
   }
 
-  // SIGN UP LINK
   Widget _signUpLink(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -268,7 +252,7 @@ class LoginScreen extends StatelessWidget {
           child: Text(
             AppStrings.loginSignUpLink,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: AppColors.gold,
+                  color: AppColors.gold, // or use AppColors.chambray? Keep as is
                   fontWeight: FontWeight.w700,
                   decoration: TextDecoration.underline,
                   decorationColor: AppColors.chambray,

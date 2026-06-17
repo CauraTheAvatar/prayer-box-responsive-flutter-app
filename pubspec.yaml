@@ -1,7 +1,5 @@
 name: prayer_box_flutter
 description: "A reactive prayer box application built with Flutter and Firebase."
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
@@ -17,14 +15,12 @@ dependencies:
   google_fonts: ^8.0.2
   intl: ^0.18.0
   firebase_core: ^4.7.0
-  firebase_app_check: ^0.4.3
   firebase_auth: ^6.4.0
-  cloud_firestore: ^6.3.0
+  uuid: ^4.5.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^6.0.0
 
 flutter:

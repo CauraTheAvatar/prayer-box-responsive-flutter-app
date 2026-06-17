@@ -5,12 +5,10 @@ import 'package:prayer_box_flutter/controllers/scripture_controller.dart';
 import 'package:prayer_box_flutter/controllers/prayer_controller.dart';
 import 'package:prayer_box_flutter/controllers/auth_controller.dart';
 import 'package:prayer_box_flutter/core/theme/app_theme.dart';
-
 import 'package:prayer_box_flutter/data/services/scripture_service.dart';
 import 'package:prayer_box_flutter/data/services/local_storage_service.dart';
 import 'package:prayer_box_flutter/routes/app_pages.dart';
 import 'package:prayer_box_flutter/routes/app_routes.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -21,20 +19,18 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // Initialise services first because controllers depend on them
+  // Services
   final LocalStorageService localStorageService = LocalStorageService();
   await localStorageService.init();
   Get.put(localStorageService);
 
-  final ScriptureService scriptureService = ScriptureService();
-  Get.put(scriptureService);
+  Get.put(ScriptureService());
 
-  // Initialise controllers are registered globally for the app lifetime
-  // Get.find() in any screen or widget will locate these instances
-  Get.put(AuthController());
+  // Controllers 
   Get.put(PrayerController());
   Get.put(ScriptureController());
   Get.put(SettingsController());
+  Get.put(AuthController()); // This triggers the auth state check immediately
 
   runApp(const PrayerBoxApp());
 }
@@ -48,7 +44,7 @@ class PrayerBoxApp extends StatelessWidget {
       title: 'Prayer Box',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      initialRoute: AppRoutes.landing,
+      initialRoute: AppRoutes.login, // start at login
       getPages: AppPages.pages,
     );
   }

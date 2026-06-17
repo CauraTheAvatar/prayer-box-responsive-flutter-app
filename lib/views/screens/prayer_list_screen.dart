@@ -6,7 +6,6 @@ import 'package:prayer_box_flutter/core/theme/app_colors.dart';
 import 'package:prayer_box_flutter/core/responsive/app_responsive.dart';
 import 'package:prayer_box_flutter/core/constants/app_strings.dart';
 import 'package:prayer_box_flutter/core/theme/app_theme.dart';
-import 'package:prayer_box_flutter/core/utils/date_formatter.dart';
 
 import 'package:prayer_box_flutter/data/models/prayer_models.dart';
 import 'package:prayer_box_flutter/routes/app_routes.dart';

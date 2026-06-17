@@ -5,7 +5,6 @@ import 'package:prayer_box_flutter/core/theme/app_colors.dart';
 import 'package:prayer_box_flutter/core/theme/app_theme.dart';
 import 'package:prayer_box_flutter/core/responsive/app_responsive.dart';
 import 'package:prayer_box_flutter/core/constants/app_strings.dart';
-import 'package:prayer_box_flutter/routes/app_routes.dart';
 import 'package:prayer_box_flutter/core/utils/validators.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -23,70 +22,57 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background, // off-white
       body: SafeArea(
-        child: ResponsiveContainer(
-          child: SingleChildScrollView(
-            padding: AppResponsive.screenPadding(context),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(
-                  height: AppResponsive.value<double>(
-                    context,
-                    mobile: 32,
-                    tablet: 48,
-                    desktop: 64,
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: SingleChildScrollView(
+              padding: AppResponsive.screenPadding(context),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(height: _getResponsiveHeight(context)),
+                  _header(context),
+                  const SizedBox(height: 32),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _usernameField(context),
+                        const SizedBox(height: 16),
+                        _emailField(context),
+                        const SizedBox(height: 16),
+                        _passwordField(context),
+                        const SizedBox(height: 16),
+                        _confirmPasswordField(context),
+                        const SizedBox(height: 16),
+                        Obx(() {
+                          if (_authController.errorMessage.value.isEmpty) {
+                            return const SizedBox.shrink();
+                          }
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 4, bottom: 4),
+                            child: Text(
+                              _authController.errorMessage.value,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelSmall
+                                  ?.copyWith(color: Colors.red.shade700),
+                            ),
+                          );
+                        }),
+                        const SizedBox(height: 24),
+                        _signUpButton(context),
+                        const SizedBox(height: 16),
+                        _loginLink(context),
+                        const SizedBox(height: 24),
+                      ],
+                    ),
                   ),
-                ),
-
-                _header(context),
-                const SizedBox(height: 32),
-
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _usernameField(context),
-                      const SizedBox(height: 16),
-
-                      _emailField(context),
-                      const SizedBox(height: 16),
-
-                      _passwordField(context),
-                      const SizedBox(height: 16),
-
-                      _confirmPasswordField(context),
-                      const SizedBox(height: 16),
-
-                      Obx(() {
-                        if (_authController.errorMessage.value.isEmpty) {
-                          return const SizedBox.shrink();
-                        }
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 4, bottom: 4),
-                          child: Text(
-                            _authController.errorMessage.value,
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall
-                                ?.copyWith(color: Colors.red.shade700),
-                          ),
-                        );
-                      }),
-
-                      const SizedBox(height: 24),
-
-                      _signUpButton(context),
-                      const SizedBox(height: 16),
-
-                      _loginLink(context),
-                      const SizedBox(height: 24),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -94,7 +80,13 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  // HEADER
+  double _getResponsiveHeight(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    if (width >= 1200) return 64.0;
+    if (width >= 600) return 48.0;
+    return 32.0;
+  }
+
   Widget _header(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,7 +94,7 @@ class SignUpScreen extends StatelessWidget {
         Text(
           AppStrings.appName.toUpperCase(),
           style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                color: AppColors.espresso,
+                color: AppColors.espresso, // brown
                 letterSpacing: 3,
               ),
         ),
@@ -119,7 +111,7 @@ class SignUpScreen extends StatelessWidget {
         Text(
           AppStrings.signUpTitle,
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                color: AppColors.espresso,
+                color: AppColors.espresso, // brown
               ),
         ),
         const SizedBox(height: 4),
@@ -133,64 +125,6 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  // // FORM
-  // Widget _formField({
-  //   required BuildContext context,
-  //   required String label,
-  //   requried TextEditingController controller,
-  //   required String hintText,
-  //   required String? Function(String?) validator,
-  //   TextInputAction textInputAction = TextInputAction.next,
-  //   TextInputType keyboardType = TextInputType.text,
-  //   bool obscure = false,
-  //   VoidCallback? onToggleObscure,
-  //   bool isObscured = false,
-  // }) {
-  //   return Container(
-  //     decoration: AppTheme.widgetDecoration,
-  //     padding: const EdgeInsets.all(16),
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         Text(
-  //           label,
-  //           style: Theme.of(context).textTheme.labelLarge?.copyWith(
-  //                 color: AppColors.espresso,
-  //                 letterSpacing: 2,
-  //               ),
-  //         ),
-  //         const SizedBox(height: 10),
-  //         TextFormField(
-  //           controller: controller,
-  //           obscureText: obscure,
-  //           keyboardType: keyboardType,
-  //           textInputAction: textInputAction,
-  //           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-  //                 color: AppColors.espresso,
-  //               ),
-  //           decoration: InputDecoration(
-  //             hintText: hint,
-  //             suffixIcon: onToggleObscure != null
-  //                 ? GestureDetector(
-  //                     onTap: onToggleObscure,
-  //                     child: Icon(
-  //                       isObscured
-  //                           ? Icons.visibility_outlined
-  //                           : Icons.visibility_off_rounded,
-  //                       color: AppColors.clay,
-  //                       size: 20,
-  //                     ),
-  //                   )
-  //                 : null,
-  //           ),
-  //           validator: validator,
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  // USERNAME FIELD
   Widget _usernameField(BuildContext context) {
     return Container(
       decoration: AppTheme.widgetDecoration,
@@ -201,7 +135,7 @@ class SignUpScreen extends StatelessWidget {
           Text(
             'Username',
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: AppColors.espresso,
+                  color: AppColors.espresso, // brown
                   letterSpacing: 2,
                 ),
           ),
@@ -209,7 +143,9 @@ class SignUpScreen extends StatelessWidget {
           TextFormField(
             controller: _usernameController,
             textInputAction: TextInputAction.next,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: AppColors.espresso, // brown
+                ),
             decoration: const InputDecoration(
               hintText: 'Enter a username...',
             ),
@@ -223,7 +159,6 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  // EMAIL FIELD
   Widget _emailField(BuildContext context) {
     return Container(
       decoration: AppTheme.widgetDecoration,
@@ -234,7 +169,7 @@ class SignUpScreen extends StatelessWidget {
           Text(
             'Email',
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: AppColors.espresso,
+                  color: AppColors.espresso, // brown
                   letterSpacing: 2,
                 ),
           ),
@@ -243,7 +178,9 @@ class SignUpScreen extends StatelessWidget {
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: AppColors.espresso, // brown
+                ),
             decoration: const InputDecoration(
               hintText: 'Enter your email address...',
             ),
@@ -257,7 +194,6 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  // PASSWORD FIELD
   Widget _passwordField(BuildContext context) {
     return Container(
       decoration: AppTheme.widgetDecoration,
@@ -268,7 +204,7 @@ class SignUpScreen extends StatelessWidget {
           Text(
             'Password',
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: AppColors.espresso,
+                  color: AppColors.espresso, // brown
                   letterSpacing: 2,
                 ),
           ),
@@ -277,7 +213,9 @@ class SignUpScreen extends StatelessWidget {
                 controller: _passwordController,
                 obscureText: _obscurePassword.value,
                 textInputAction: TextInputAction.next,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: AppColors.espresso, // brown
+                    ),
                 decoration: InputDecoration(
                   hintText: 'Enter a password...',
                   suffixIcon: GestureDetector(
@@ -306,56 +244,58 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  // CONFIRM PASSWORD FIELD
-  Widget _confirmPasswordField(BuildContext context) {
-    return Container(
-      decoration: AppTheme.widgetDecoration,
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Confirm Password',
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+Widget _confirmPasswordField(BuildContext context) {
+  return Container(
+    decoration: AppTheme.widgetDecoration,
+    padding: const EdgeInsets.all(16),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Confirm Password',
+          style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                color: AppColors.espresso,
+                letterSpacing: 2,
+              ),
+        ),
+        const SizedBox(height: 10),
+        Obx(
+          () => TextFormField(
+            controller: _confirmPasswordController,
+            obscureText: _obscureConfirmPassword.value,
+            textInputAction: TextInputAction.done,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppColors.espresso,
-                  letterSpacing: 2,
                 ),
+            decoration: InputDecoration(
+              hintText: 'Confirm your password...',
+              suffixIcon: GestureDetector(
+                onTap: () => _obscureConfirmPassword.value = !_obscureConfirmPassword.value,
+                child: Icon(
+                  _obscureConfirmPassword.value
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                  color: AppColors.espresso,
+                  size: 20,
+                ),
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Please confirm your password.';
+              }
+              if (value.trim() != _passwordController.text.trim()) {
+                return 'Passwords do not match.';
+              }
+              return null;
+            },
           ),
-          const SizedBox(height: 10),
-          Obx(() => TextFormField(
-                controller: _confirmPasswordController,
-                obscureText: _obscureConfirmPassword.value,
-                textInputAction: TextInputAction.done,
-                style: Theme.of(context).textTheme.bodyMedium,
-                decoration: InputDecoration(
-                  hintText: 'Confirm your password...',
-                  suffixIcon: GestureDetector(
-                    onTap: () => _obscureConfirmPassword.value = !_obscureConfirmPassword.value,
-                    child: Icon(
-                      _obscureConfirmPassword.value
-                          ? Icons.visibility_outlined
-                          : Icons.visibility_off_outlined,
-                      color: AppColors.espresso,
-                      size: 20,
-                    ),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Please confirm your password.';
-                  } 
-                  if (value.trim() != _passwordController.text.trim()) {
-                    return 'Passwords do not match.';
-                  }
-                  return null;
-                }
-              )),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
 
-  // SIGN UP BUTTON
   Widget _signUpButton(BuildContext context) {
     return Obx(() => GestureDetector(
           onTap: _authController.isLoading.value
@@ -368,40 +308,39 @@ class SignUpScreen extends StatelessWidget {
                       password: _passwordController.text,
                     );
                   }
-                }
+                },
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 14),
             decoration: _authController.isLoading.value
                 ? AppTheme.buttonDecoration
-                : AppTheme.primaryButtonDecoration,
+                : AppTheme.primaryButtonDecoration, // blue background
             child: Center(
               child: _authController.isLoading.value
                   ? const SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(
-                      color: AppColors.espresso,
-                      strokeWidth: 2,
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        color: AppColors.espresso,
+                        strokeWidth: 2,
+                      ),
+                    )
+                  : Text(
+                      AppStrings.signUpButton,
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                            color: AppColors.espresso, // brown text on blue button
+                          ),
                     ),
-                  )
-                : Text(
-                    AppStrings.signUpButton,
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          color: AppColors.espresso,
-                        ),
-                ),
             ),
           ),
-    ));
+        ));
   }
 
-  // LOGIN LINK
   Widget _loginLink(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          AppStrings.signUpHaveAccount,
+          'Already have an account?',
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: AppColors.clay,
               ),
